@@ -10,7 +10,8 @@ This project uses models implemented with scikit-learn to predict of whether a p
 - **scripts/train.py**: Train the model and saves the output to a bin file.
 - **scripts/predict.py**: Reads the bin file and deploys the model to an app using flask.
 - **Pipfile**: Pip dependencies for local reproducibility of the project.
-
+- **Dockerfile**: Dockerfile for local reproducibility of the project.
+- **scripts/predict-test.py**: Tests functionality of the app after deployment.
 
 ## Background
 Recently, the surge in the housing market has caused many prospective homebuyers to apply for loans. By analyzing historical data and various features related to a client's financial history, the model can estimate the likelihood of defaulting on a loan. This information is crucial for making informed decisions about whether to approve or deny a loan application.
@@ -69,9 +70,7 @@ NN | 0.027501 | 0.705000 | 1.000000 | 0.826979
 
 
 ## Local deployment of the app
-
-Navigate to the root of the repository and open the pipenv virtual environment by running the following command in your command line:
-
+To follow this deployment, you will first need to have python and pipenv installed. After doing so, navigate to the root of the repository and open the pipenv virtual environment by running the following command in your command line:
 ```sh
 pipenv shell
 ```
@@ -86,8 +85,21 @@ Alternatively, if you are on windows, run:
 waitress-serve --listen=*:9696 predict:app
 ```
 
-Finally, you can test the apps functionality by opening a separate command line window, navigate to the scripts directory, and run the following commands:
+Finally, you can test the apps functionality by opening a separate command line window, navigate to the scripts directory, and run the following command:
 ```sh
-pipenv shell
+python predict-test.py
+```
+
+## Containerized local deployment of the app
+Instead of using a local conda environment, the app can be deployed locally using docker. Open a command prompt and navigate to the root of the directory. Next, run the following commands to deploy the app.
+
+```sh
+docker build -t credit-prediction .
+
+docker run -it -p 9696:9696 credit-prediction:latest
+```
+
+Again, you can test the apps functionality by opening a separate command line window, navigate to the scripts directory, and run the following command:
+```sh
 python predict-test.py
 ```
