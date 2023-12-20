@@ -13,6 +13,7 @@ sklearn-pandas = "*"
 seaborn = "*"
 gunicorn = "*"
 waitress = "*"
+requests = "*"
 
 [dev-packages]
 
