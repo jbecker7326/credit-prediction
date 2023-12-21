@@ -3,15 +3,15 @@
 This project uses models implemented with scikit-learn to predict of whether a person will default on their credit. It was created as a project for ML Zoomcamp 2023 cohort.
 
 ## Important Files
-- **notebooks/notebook.ipynb**: 
+- **[notebook.ipynb](notebooks/notebook.ipynb)**: 
 -- Section 1 contains data preparation and EDA for the credit dataset. 
 -- Section 2 includes cross-validation training of multiple models (Decision Trees, Neural Nets, KNN and SVM) implemented with scikit-learn and hyperparameter tuning for each model
 -- Section 3 compares all tuned models from section 2 to determine the best one. Our SVM model had the best performance as well as a relatively low runtime, so we decided to move forward with this one.
-- **scripts/train.py**: Train the model and saves the output to a bin file.
-- **scripts/predict.py**: Reads the bin file and deploys the model to an app using flask.
-- **Pipfile**: Pip dependencies for local reproducibility of the project.
-- **Dockerfile**: Dockerfile for local reproducibility of the project.
-- **scripts/predict-test.py**: Tests functionality of the app after deployment.
+- **[train.py](scripts/train.py)**: Train the model and saves the output to a bin file.
+- **[predict.py](scripts/predict.py)**: Reads the bin file and deploys the model to an app using flask.
+- **[Pipfile](Pipfile)**: Pip dependencies for local reproducibility of the project.
+- **[Dockerfile](Dockerfile)**: Dockerfile for local reproducibility of the project.
+- **[predict-test.py](scripts/predict-test.py)**: Tests functionality of the app after deployment.
 
 ## Background
 Recently, the surge in the housing market has caused many prospective homebuyers to apply for loans. By analyzing historical data and various features related to a client's financial history, the model can estimate the likelihood of defaulting on a loan. This information is crucial for making informed decisions about whether to approve or deny a loan application.
@@ -25,14 +25,12 @@ We observed a binary classification problem of whether or not someone has good c
 
 The dataset contains 1,000 records and 20 features. Of these features, there are 7 discrete numeric features of various ranges and 14 symbolic string features with up to 5 possible values. 
 
-
-## Data Preparation
-
-Section 1.2 and 1.4 of the [notebook](./notebooks/notebook.ipynb) includes our EDA for the credit dataset. It was also converted into a standalone [python file](./scripts/data_prep.py), which is automatically applied to the training data before deployment. Our primary goal was to covert all categorical columns to numeric.
+Section 1.2 and 1.4 of the [notebook](./notebooks/notebook.ipynb) includes our preparation for the credit dataset. It was also converted into a standalone [python file](./scripts/data_prep.py), which is automatically applied to the training data before deployment. Our primary goal was to covert all categorical columns to numeric.
 To achieve this, we used binary conversion, ordinal encoding, and one-hot encoding. Our preparation pipeline was run on both the training and testing dataset.
 
 
-## EDA
+## Analysis
+### EDA
 
 Section 1.3 of the [notebook](./notebooks/notebook.ipynb) includes our EDA for the credit dataset.
 
@@ -50,9 +48,9 @@ First, for each feature we computed the following metrics, which are also export
 Next, we generated [pair plots](./notebooks/eda/credit_hist) to get an overview of all features, then took a closer look at their relationships with the label using a [correlation matrix](./notebooks/eda/credit_corr) for the top 5 most highly correlated features.
 
 
-## Training and Model Comparison
+### Training and Model Comparison
 
-Section 2 of the [notebook](./notebooks/notebook.ipynb) includes training for 4 different models implemented with scikit-learn. We created validation curves, learning curves, and loss curves (where applicable) to tune the hyperparameters to their optimal performance. We looked at:
+Section 2 of the [notebook](./notebooks/notebook.ipynb) includes training and evaluation for 4 different models implemented with scikit-learn. We created validation curves, learning curves, and loss curves (where applicable) to tune the hyperparameters to their optimal performance. We looked at:
 - **Decision Trees**: Section 2.1
 - **K-Nearest Neighbors**: Section 2.2
 - **Support Vector Machines**: Section 2.3
@@ -69,8 +67,39 @@ SVM | 0.012499 | 0.705000 | 1.000000 | 0.826979
 NN | 0.027501 | 0.705000 | 1.000000 | 0.826979
 
 
-## Local deployment of the app
-To follow this deployment, you will first need to have python and pipenv installed. After doing so, navigate to the root of the repository and open the pipenv virtual environment by running the following command in your command line:
+## Running the project
+
+### Installing dependencies
+To run the model prediction, you will first need to have python 3.12 installed. 
+
+For windows, follow the instructions on the [Conda website](https://docs.anaconda.com/free/anaconda/install/windows/) to install Anaconda Prompt then within it, run the following command:
+```sh
+conda install python=3.12
+```
+
+For mac/linux, install python from [their website](https://www.python.org/downloads/).
+
+You can download all dependencies to a conda environment and open the environment with the following command, or use pipenv as described below.
+```sh
+conda create --name creditprediction --file requirements.txt
+conda activate creditprediction
+```
+
+You can install pipenv and open the virtual environment with the following:
+```sh
+conda install pipenv
+pipenv shell
+```
+
+### Model training and testing
+Navigate to the scripts folder and run the following command to train and test the SVM model. 
+The script will automatically import the data with OpenML, prepare the data, and save the model to [model.bin](scripts/model.bin).
+```sh
+python train.py
+```
+
+### Local deployment
+**To follow this deployment, you will first need to have python and pipenv installed.** After doing so, navigate to the root of the repository and open the pipenv virtual environment by running the following command in your command line:
 ```sh
 pipenv shell
 ```
@@ -90,7 +119,7 @@ Finally, you can test the apps functionality by opening a separate command line 
 python predict-test.py
 ```
 
-## Containerized local deployment of the app
+### Containerized local deployment with docker
 Instead of using a local conda environment, the app can be deployed locally using docker. Open a command prompt and navigate to the root of the directory. Next, run the following commands to deploy the app.
 
 ```sh
