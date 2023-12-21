@@ -4,9 +4,9 @@ This project uses models implemented with scikit-learn to predict of whether a p
 
 ## Important Files
 - **[notebook.ipynb](notebooks/notebook.ipynb)**: 
--- Section 1 contains data preparation and EDA for the credit dataset. 
--- Section 2 includes cross-validation training of multiple models (Decision Trees, Neural Nets, KNN and SVM) implemented with scikit-learn and hyperparameter tuning for each model
--- Section 3 compares all tuned models from section 2 to determine the best one. Our SVM model had the best performance as well as a relatively low runtime, so we decided to move forward with this one.
+	- Section 1 contains data preparation and EDA for the credit dataset. 
+	- Section 2 includes cross-validation training of multiple models (Decision Trees, Neural Nets, KNN and SVM) implemented with scikit-learn and hyperparameter tuning for each model
+	- Section 3 compares all tuned models from section 2 to determine the best one. Our SVM model had the best performance as well as a relatively low runtime, so we decided to move forward with this one.
 - **[train.py](scripts/train.py)**: Train the model and saves the output to a bin file.
 - **[predict.py](scripts/predict.py)**: Reads the bin file and deploys the model to an app using flask.
 - **[Pipfile](Pipfile)**: Pip dependencies for local reproducibility of the project.
